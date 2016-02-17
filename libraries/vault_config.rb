@@ -41,7 +41,7 @@ module VaultCookbook
       attribute(:manage_certificate, kind_of: [TrueClass, FalseClass], default: true)
 
       def tls?
-        return true unless %w{1 true}.include?(tls_disable) && manage_certificate
+        return true unless %w{1 true}.include?(tls_disable)
 
         false
       end
@@ -65,7 +65,7 @@ module VaultCookbook
 
       action(:create) do
         notifying_block do
-          if new_resource.tls?
+          if new_resource.tls? && manage_certificate
             include_recipe 'chef-vault::default'
 
             [new_resource.tls_cert_file, new_resource.tls_key_file].each do |dirname|
