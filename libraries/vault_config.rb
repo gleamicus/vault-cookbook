@@ -65,7 +65,7 @@ module VaultCookbook
 
       action(:create) do
         notifying_block do
-          if new_resource.tls? && manage_certificate
+          if new_resource.tls? && new_resource.manage_certificate
             include_recipe 'chef-vault::default'
 
             [new_resource.tls_cert_file, new_resource.tls_key_file].each do |dirname|
